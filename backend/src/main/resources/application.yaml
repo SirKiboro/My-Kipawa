@@ -4,7 +4,7 @@ spring:
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://db:5432/mykipawa}
     username: ${SPRING_DATASOURCE_USERNAME:postgres}
-    password: ${SPRING_DATASOURCE_PASSWORD:***REMOVED***}
+    password: ${SPRING_DATASOURCE_PASSWORD:sudo}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
