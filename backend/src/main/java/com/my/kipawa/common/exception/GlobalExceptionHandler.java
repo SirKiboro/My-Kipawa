@@ -24,12 +24,16 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)  // Catch-all for unexpected errors
     public ResponseEntity<ErrorResponse> handleGlobalException(Exception ex) {
+
+        ex.printStackTrace();
+
         ErrorResponse error = ErrorResponse.builder()
                 .success(false)
-                .message("An unexpected error occurred")
+                .message(ex.getClass().getSimpleName() + ":" + ex.getMessage())
                 .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
                 .timestamp(LocalDateTime.now())
                 .build();
+
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
