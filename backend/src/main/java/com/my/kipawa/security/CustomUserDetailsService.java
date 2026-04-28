@@ -16,15 +16,12 @@ public class CustomUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String loginInput) throws UsernameNotFoundException {
 
-        if ("system_admin".equals(username)) {
-            return new org.springframework.security.core.userdetails.User(
-                    "system_admin",
-                    "password_hash", // be a BCrypt hash
-                    new ArrayList<>()
-            );
-        }
-        throw new UsernameNotFoundException("User not found with username: " + username);
+        // Search the database for a match in either column
+        return userRepository.findByEmailOrUsername(loginInput, loginInput)
+                .orElseThrow(() -> new UsernameNotFoundException(
+                        "User not found with email or username: " + loginInput));
+
     }
 }
