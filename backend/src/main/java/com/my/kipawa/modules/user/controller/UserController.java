@@ -7,6 +7,7 @@ import com.my.kipawa.modules.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +32,7 @@ public class UserController {
     }
 
     @GetMapping("/{id:[0-9]+}")
+    @PreAuthorize("hasRole ('ADMIN')")
     public ResponseEntity<ApiResponse<UserResponseDTO>> getUserById(@PathVariable Long id){
         UserResponseDTO user = userService.getUserById(id);
         return ResponseEntity.ok(
