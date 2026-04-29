@@ -25,8 +25,19 @@ public class User implements UserDetails {
     @Column(unique = true, nullable = false)
     private String email;
 
+    @Column(unique = true, nullable = false)
+    private String username;
+
+    @Transient
     private String firstName;
+
+    @Transient
     private String lastName;
+
+    @Column(name = "full_name")
+    private String fullName;
+
+    private String password;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -35,11 +46,16 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private boolean enabled = true;
 
-    private String password;
+    @PrePersist
+    @PreUpdate
+    private void syncFullName(){
+        if (firstName != null || lastName != null) {
+            this.fullName = (firstName != null ? firstName : "") + " " + (lastName != null ? lastName : "");
+            this.fullName = this.fullName.trim();
+        }
+    }
 
-    @Column(unique = true, nullable = false)
-    private String username;
-
+            // security methods
     @Override
     public String getUsername(){
         return email;
@@ -49,7 +65,6 @@ public class User implements UserDetails {
         return username;
     }
 
-    // security methods
     @Override
     public Collection <? extends GrantedAuthority> getAuthorities(){
         return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
