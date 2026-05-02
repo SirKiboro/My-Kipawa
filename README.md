@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # My Kipawa
 
 ## Overview
