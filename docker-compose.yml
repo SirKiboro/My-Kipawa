@@ -1,0 +1,40 @@
+services:
+  db:
+    image: postgres:15
+    container_name: kipawa-db
+    restart: always
+    environment:
+      POSTGRES_DB: mykipawa
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: kIpAwA 2026.
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - kipawa-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: kipawa-backend
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/mykipawa
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=kIpAwA 2026.
+      - SPRING_PROFILES_ACTIVE=dev
+    networks:
+      - kipawa-network
+
+networks:
+  kipawa-network:
+    driver: bridge
+
+volumes:
+  pgdata:
