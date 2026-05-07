@@ -6,7 +6,7 @@ services:
     environment:
       POSTGRES_DB: mykipawa
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: ***REMOVED***
+      POSTGRES_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
     ports:
       - "5432:5432"
     volumes:
@@ -27,7 +27,7 @@ services:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/mykipawa
       - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=***REMOVED***
+      - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
       - SPRING_PROFILES_ACTIVE=dev
     networks:
       - kipawa-network
