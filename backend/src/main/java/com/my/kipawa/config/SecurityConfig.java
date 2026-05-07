@@ -28,6 +28,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable) // CSRF is not needed for stateless JWT APIs
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/auth/**").permitAll() // Public access for Login/Register
+                        .requestMatchers("/api/v1/talents/**").permitAll()
                         .anyRequest().authenticated()                  // Lock everything else
                 )
                 .sessionManagement(session -> session

@@ -1,5 +1,7 @@
 package com.my.kipawa.modules.user.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.my.kipawa.modules.talent.entity.TalentProfile;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -41,6 +43,10 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private TalentProfile talentProfile;
 
     @Builder.Default
     @Column(nullable = false)

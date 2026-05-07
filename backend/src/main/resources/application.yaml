@@ -2,7 +2,7 @@ spring:
   application:
     name: my-kipawa-backend
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://db:5432/mykipawa}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/mykipawa}
     username: ${SPRING_DATASOURCE_USERNAME}
     password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: org.postgresql.Driver
@@ -14,6 +14,17 @@ spring:
       hibernate:
         format_sql: true
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: mappings
+
+logging:
+  level:
+    org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: DEBUG
+    org.springframework.security: DEBUG
+
 jwt:
-  secret: ${JWT_SECRET:***REMOVED***}
-  expiration: ${JWT_EXPIRATION:86400000}
+  secret: ${JWT_SECRET}
+  expiration: ${JWT_EXPIRATION}
